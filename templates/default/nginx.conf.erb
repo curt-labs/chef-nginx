@@ -64,6 +64,13 @@ http {
   client_max_body_size <%= node['nginx']['client_max_body_size'] %>;
   <% end -%>
 
+  <% if node['nginx']['ngx_pagespeed'] -%>
+  pagespeed on;
+  <% node['nginx']['ngx_pagespeed']['pagespeed'].each do |k, v| -%>
+  pagespeed <%= k %> <%= v %>;
+  <% end -%>
+  <% end -%>
+
   include <%= node['nginx']['dir'] %>/conf.d/*.conf;
   include <%= node['nginx']['dir'] %>/sites-enabled/*;
 }
